@@ -1,3 +1,6 @@
+import profileRecuder from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
@@ -31,36 +34,7 @@ let store = {
     _callSubscriber() {
         console.log("state changed");
     },
-    _addPost() {
 
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber(this._state);
-    },
-    _updateNewPostText(newText) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this._state);
-    },
-    _updateNewMessageBody(newText) {
-        this._state.dialogsPage.newMessageBody = newText;
-        this._callSubscriber(this._state);
-    },
-    _sendMessage() {
-        debugger;
-        let message = {
-            id: 4,
-            message: this._state.dialogsPage.newMessageBody
-        }
-        this._state.dialogsPage.messages.push(message);
-        this._state.dialogsPage.newMessageBody = '';
-        this._callSubscriber(this._state);
-    },
     getState() {
         return this._state;
     },
@@ -68,41 +42,12 @@ let store = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            this._addPost();
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._updateNewPostText(action.newText);
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-            this._updateNewMessageBody(action.newText)
-        } else if (action.type === SEND_MESSAGE) {
-            this._sendMessage();
-        }
+        this._state.profilePage=profileRecuder(this._state.profilePage,action);
+        this._state.dialogsPage=dialogsReducer(this._state.dialogsPage,action);
+
+        this._callSubscriber(this._state);
     }
 }
-
-export const addPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    }
-};
-
-export const updateNewPostTextActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
-    }
-};
-export const updateNewMessageBodyActionCreator = (body) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        newText: body
-    }
-};
-export const sendMessageActionCreator = () => {
-    return {
-        type: SEND_MESSAGE
-    }
-};
 
 export default store;
 
