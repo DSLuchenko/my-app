@@ -9,27 +9,25 @@ let initialState = {
     newPostText: ''
 };
 
-const profileRecuder = (state=initialState, action) => {
-
+const profileRecuder = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST:{
-            let newPost = {
-                id: 5,
-                message: state.newPostText,
-                likesCount: 0
-            }
-            state.posts.push(newPost);
-            state.newPostText = '';
-            return state;
+        case ADD_POST: {
+            return {
+                ...state,
+                posts:[...state.posts,{id: 5, message: state.newPostText, likesCount: 0}],
+                newPostText:''
+            };
         };
-        case UPDATE_NEW_POST_TEXT:{
-            state.newPostText = action.newText;
-            return state;
+        case UPDATE_NEW_POST_TEXT: {
+            return {
+                ...state,
+                newPostText:action.newText};
         };
-        default:{
+        default: {
             return state;
-        };
-    };
+        } ;
+    }
+    ;
 };
 
 export const addPostActionCreator = () => {

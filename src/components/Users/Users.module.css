@@ -1,0 +1,27 @@
+.usersWrapper {
+    display: grid;
+    grid-template-areas:
+    "a u"
+    "a s";
+    grid-template-columns: 2fr 10fr;
+    margin-top: 10px;
+
+}
+
+.avaButton {
+    grid-area: a;
+    align-self: center;
+
+}
+
+.usersDesc {
+    grid-area: u;
+    display: flex;
+    justify-content: space-between;
+    border: 4px double brown;
+    border-radius: 10px;
+}
+
+.statusRow{
+    grid-area: s;
+}

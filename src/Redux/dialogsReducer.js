@@ -18,20 +18,21 @@ let initialState = {
 };
 
 export const dialogsReducer = (state=initialState, action) => {
+
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY: {
-            state.newMessageBody = action.newText;
-            return state;
+            return {
+                ...state,
+                newMessageBody: action.newText};
         };
         case SEND_MESSAGE: {
-            let message = {
-                id: 5,
-                message: state.newMessageBody
-            }
-            state.messages.push(message);
-            state.newMessageBody = '';
-            return state;
-        } ;
+            let body = state.newMessageBody;
+            return {
+                ...state,
+                messages: [...state.messages, {id: 5, message: body}],
+                newMessageBody:''
+            };
+        };
         default: {
             return state;
         };
