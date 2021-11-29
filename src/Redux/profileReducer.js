@@ -1,8 +1,15 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+let initialState = {
+    posts: [
+        {id: 1, message: 'Hi, how are you?', likesCount: 1},
+        {id: 2, message: 'Its my first post', likesCount: 15}
+    ],
+    newPostText: ''
+};
 
-const profileRecuder = (state, action) => {
+const profileRecuder = (state=initialState, action) => {
 
     switch (action.type) {
         case ADD_POST:{
